@@ -1,4 +1,4 @@
-class Info:
+'''class Info:
     def __init__(self, nome, grad, espec, mest, dout, posDout):
         self.__nome = nome
         self.__grad = grad
@@ -137,7 +137,10 @@ class LinkedList:
         return res 
 
     def showList(self):
-        return self.__str__()
+        return self.__str__()'''
+
+def menu():
+    print('(c) Carregar dados\n(e) Estatísticas da base de dados\n(i) Busca\n(s) Sobre\n(q) Sair')     
 
 
 def showData(linkedList):
@@ -160,4 +163,99 @@ def showData(linkedList):
             break    
         count += 1
 
-    
+import csv
+#import ast
+def load():
+    with open('curriculos-lattes.csv') as dataset:
+        leitor_dataset = csv.DictReader(dataset,delimiter=',')
+        #contador = 1
+        #lista = LinkedList()
+        for linha in leitor_dataset:
+            nome = linha["nome"]
+            print(nome)
+
+            '''if linha["graduacao"] == 'SIM' and linha["area_graduacao"]:
+                aux = linha["area_graduacao"]
+                #Caso possua mais de uma graduação converte de string p/ lista
+                if aux[0] == '[':            
+                    graduacao = ast.literal_eval(aux) 
+                #Caso possua apenas uma graduação...
+                else:
+                    graduacao = aux
+            else:
+                graduacao = 'Não possui graduação'     
+
+            if linha["especializacao"] == 'SIM' and linha["area_especializacao"]:
+                aux = linha["area_especializacao"]
+                #Caso possua mais de uma especialização converte de string p/ lista
+                if aux[0] == '[':
+                    especializacao = ast.literal_eval(aux)
+                #Caso possua apenas uma especialização...
+                else:
+                    especializacao = aux
+            else:
+                especializacao = 'Não possui especialização'
+
+            if linha["mestrado"] == 'SIM' and linha["area_mestrado"]:
+                aux = linha["area_mestrado"]
+                #Caso possua mais de um mestrado converte de string p/ lista
+                if aux[0] == '[':            
+                    mestrado = ast.literal_eval(aux)
+                #Caso possua apenas um mestrado...
+                else:
+                    mestrado = aux    
+            else:
+                mestrado = 'Não possui mestrado'                                    
+
+            if linha["doutorado"] == 'SIM' and linha["area_doutorado"]:
+                aux = linha["area_doutorado"]
+                #Caso possua mais de um doutorado converte de string p/ lista
+                if aux[0] == '[':            
+                    doutorado = ast.literal_eval(aux)
+                #Caso possua apenas um doutorado...
+                else:
+                    doutorado = aux        
+            else:
+                doutorado = 'Não possui doutorado'                                         
+
+            if linha["pos_doutorado"] == 'SIM' and linha["area_pos_doutorado"]:
+                aux = linha["area_pos_doutorado"]
+                #Caso possua mais de um pós-doutorado converte de string p/ lista
+                if aux[0] == '[':            
+                    posDout = ast.literal_eval(aux)
+                #Caso possua apenas um pós-doutorado...
+                else:
+                    posDout = aux    
+            else:
+                posDout = 'Não possui pós-doutorado'                                                                                 
+
+            dados = Info(nome,graduacao,especializacao,mestrado,doutorado,posDout)
+            lista.insertion(contador,dados)
+            contador += 1
+        return lista'''    
+
+def damerau_levenshtein_distance(s1, s2):
+    d = {}
+    lenstr1 = len(s1)
+    lenstr2 = len(s2)
+    for i in range(-1,lenstr1+1):
+        d[(i,-1)] = i+1
+    for j in range(-1,lenstr2+1):
+        d[(-1,j)] = j+1
+
+    for i in range(lenstr1):
+        for j in range(lenstr2):
+            if s1[i] == s2[j]:
+                cost = 0
+            else:
+                cost = 1
+            d[(i,j)] = min(
+                           d[(i-1,j)] + 1, # deletion
+                           d[(i,j-1)] + 1, # insertion
+                           d[(i-1,j-1)] + cost, # substitution
+                          )
+            if i and j and s1[i]==s2[j-1] and s1[i-1] == s2[j]:
+                d[(i,j)] = min (d[(i,j)], d[i-2,j-2] + cost) # transposition
+
+    return d[lenstr1-1,lenstr2-1]
+
