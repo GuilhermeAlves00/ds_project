@@ -45,11 +45,13 @@ class Info:
         return self.__posDout
 
     def setPosDout(self,newPosDout):
-        self.__posDout = newPosDout                        
+        self.__posDout = newPosDout    
+
 
 class MyException(Exception):
 	def __init__(self,message):
 		super().__init__(message)
+
 
 class Node:
     def __init__(self,data):
@@ -67,6 +69,7 @@ class Node:
     
     def setNext(self,newNext):
         self.__next = newNext
+
     
 class LinkedList:
     def __init__(self):
@@ -125,9 +128,7 @@ class LinkedList:
     '''
     def getSize(self):
         return self.__size          
-    '''
-
-    '''
+    
     def remove(self,position):
         if self.__head == None:
             raise MyException('A lista está vazia,é impossível realizar a remoção')
